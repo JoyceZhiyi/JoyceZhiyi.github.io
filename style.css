@@ -1,0 +1,18 @@
+body{
+    font-family: 'YouYuan';
+    list-style: none;
+}
+
+li{
+    list-style: none;
+    font-size: 28px;
+}
+
+p{
+    font-size: 44px;
+}
+
+span{
+    font-size: 28px;
+}
+

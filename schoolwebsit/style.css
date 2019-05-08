@@ -1,0 +1,149 @@
+body {
+    margin: 0 0 0 0;
+    background-color: aliceblue;
+}
+
+.menu {
+    background-color: rgb(10, 46, 82);
+    margin: 0 auto;
+    height: 40px;
+    width: 100%;
+}
+
+.header {
+    background-color: deepskyblue;
+    margin-bottom: 30px;
+    height: 320px;
+    width: 100%;
+}
+
+.content {
+    margin: 0 auto;
+}
+
+.news {
+    overflow: hidden;
+}
+
+.news-col-1 {
+    margin-right: -20px;
+    overflow: hidden;
+    height:200px;
+    margin-bottom: 10px;
+}
+
+.news1{
+    float: left;
+    height: 200px;
+    width: 25%;
+    padding-right: 20px;
+    box-sizing: border-box;
+    background-clip: content-box;
+}
+
+.row-1{
+    margin-right: -20px;
+    overflow: hidden;
+    height:600px;
+    margin-bottom: 10px;
+}
+
+.col-3{
+    float: left;
+    height: 600px;
+    width: 33.33%;
+    padding-right: 20px;
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-color: darkgrey;
+    margin-bottom: 60px;
+}
+
+.row-1-1{
+    height:170px;
+    margin:25px 5px 10px 5px;
+    background-color: cadetblue;
+}
+
+.row-2{
+    height:80px;
+    background-color: tomato;
+    width:100%;
+    margin-bottom: 30px;
+}
+
+#col-3-left{
+    float:left;
+    height:600px;
+    background-color: aquamarine;
+    width:45%;
+    margin:0px 30px 0px 30px;
+}
+
+
+#col-3-right{
+    float:right;
+    height:600px;
+    background-color: rgb(206, 233, 108);
+    width:45%;
+    margin:0px 30px 0px 30px;
+}
+
+.row-3{
+    margin-right: -20px;
+    overflow: hidden;
+    height:600px;
+    margin-bottom: 10px;
+    background-color: beige;
+}
+
+.row-4-col-3{
+    float: left;
+    height: 450px;
+    width: 33.33%;
+    padding-right: 20px;
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-color: darkgrey;
+    margin-bottom: 160px;
+}
+
+.row-4-col-3 > .row-3{
+    height:120px;
+    margin:25px 5px 10px 5px;
+    background-color: cadetblue;
+}
+
+.row-5{
+    clear:both; 
+    height:400px;
+    width:100%;
+    background-color: royalblue;
+    margin-bottom: 150px;
+}
+
+.footer{
+    height:100px;
+    width:100%;
+    background-color: rgb(9, 39, 126);
+    margin-top: -100px;
+    
+}
+
+
+.bar{
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 20px;
+    background-color: tomato;
+}
+
+.bar > .progress{
+    display:block;
+    width:4%;
+    height:100%;
+    background-color: aqua;
+}
