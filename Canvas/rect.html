@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="200" height="100">
+
+    </canvas>
+</body>
+
+<script type="text/javascript">
+let c = document.getElementById('myCanvas');
+let cxt = c.getContext('2d');
+// 用于设置绘画的画布的基本信息
+
+cxt.fillStyle="#336699";
+// context.fillStyle=color|gradient|pattern;
+
+cxt.fillRect(0,0,34,75);
+cxt.fillRect(12,4,23,3);
+
+// fillRect(x,y,width,hight)
+
+console.log(ctx);
+
+</script>
+</html>

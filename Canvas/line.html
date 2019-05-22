@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Line</title>
+</head>
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+</body>
+
+<script type="text/javascript">
+
+// 进行基本的画布部署
+let c = document.getElementById("canvas");
+c.width = 400;
+c.height = 300;
+let ctx = c.getContext("2d");
+c.style.backgroundColor = "#336699";
+document.body.appendChild(c);
+// 绘制曲线
+
+ctx.beginPath();
+ctx.lineWidth = "5";
+ctx.strokeStyle = "white";
+ctx.moveTo(0,75);
+ctx.lineTo(250,75);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle = "red";
+ctx.lineWidth = "7";
+ctx.moveTo(0,33);
+ctx.lineTo(150,130);
+ctx.stroke();
+
+
+
+
+</script>
+</html>

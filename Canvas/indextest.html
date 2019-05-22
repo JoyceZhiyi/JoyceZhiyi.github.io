@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+</body>
+<script type="text/javascript">
+    //铺画布
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+
+    c.width = innerWidth;
+    c.height = innerHeight;
+    c.style.background = "black";
+    document.body.appendChild(c);
+    ctx.font = "28px STHupo";
+
+    //饼图数据
+    var data = [{
+            title: "直接访问",
+            value: 0.18,
+            color: "#993300"
+        },
+        {
+            title: "邮件营销",
+            value: 0.12,
+            color: "#1e90ff"
+        },
+        {
+            title: "联盟广告",
+            value: 0.10,
+            color: "#66cccc"
+        },
+        {
+            title: "视频广告",
+            value: 0.05,
+            color: "#ffcc99"
+        },
+        {
+            title: "搜索引擎",
+            value: 0.55,
+            color: "#33cc99"
+        },
+    ]
+    var radius = 210;
+    var center = {
+        x: 400,
+        y: 300,
+    };
+
+    //饼图函数
+    function calPor(data) {
+        if (data instanceof Array) {
+            // reduce（function()）reduce 方法接收一个函数作为参数
+            var sum = data.reduce(function (a, b) {
+                return a + b.value;
+            }, 0);
+
+            // 使用map()直接针对于每一个单独的扇形进行设置
+            var map = data.map(function (a) {
+                return {
+                    title: a.title,
+                    value: a.value,
+                    color: a.color,
+                    portion: a.value / sum,
+                };
+            });
+            return map;
+        }
+    }
+
+    //设置一个用于存放角度的对象
+
+
+
+
+    function draw() {
+        var dataS = calPor(data);
+
+        var tempAngel = -90;
+        for (var i = 0; i < data.length; i++) {
+
+            ctx.beginPath();
+            ctx.moveTo(center.x, center.y);
+
+            var angle = data[i].value * 360;
+
+            var beginAngel = tempAngel * Math.PI / 180;
+            var endAngel = (tempAngel + angle) * Math.PI / 180;
+
+
+            ctx.arc(center.x, center.y, radius, beginAngel, endAngel);
+            ctx.stroke();
+
+            ctx.fillStyle = data[i].color;
+            ctx.fill();
+
+            var txt = data[i].title + ':' + data[i].value.toFixed(2) * 100 + '%';
+            var txtAngel = tempAngel + 1 / 2 * angle;
+
+            var txtX = center.x + Math.cos(txtAngel * Math.PI / 180) * (radius + 30);
+            var txtY = center.y + Math.sin(txtAngel * Math.PI / 180) * (radius + 30);
+
+            if (txtAngel > 90 && txtAngel < 270) {
+                ctx.textAlign = 'end';
+            }
+
+            ctx.fillText(txt, txtX, txtY);
+            tempAngel += angle;
+        }
+
+    }
+
+    //针对悬浮位置重新进行绘图
+
+
+    //坐标转化成为角度
+    function transAngle(x, y) {
+        ctx.translate(center.x,center.y);
+        while (x * x + y * y < radius || x * x + y * y == radius) {
+            var angelNow = Math.atan2(x, y);
+        }
+        return angelNow;
+    }
+
+
+    //单独算出所有的区域的起始结束角度，并进行返回
+    function areaAngel() {
+        var angelData = {
+            startAngel,
+            endAngel,
+            color,
+        }
+        var dataS = calPor(data);
+
+        var tempAngel = -90;
+        for (var i = 0; i < data.length, j < angelData.length; i++) {
+
+            var angle = data[i].value * 360;
+
+            var beginAngel = tempAngel * Math.PI / 180;
+            var endAngel = (tempAngel + angle) * Math.PI / 180;
+
+            angelData[i].startAngel = beginAngel;
+            angelData[i].endAngel = endAngel;
+            angelData[i].color = data[i].color;
+
+            tempAngel += angle;
+        }
+        return angelData;
+    }
+
+
+
+    function wherePath(x, y) {
+        var angelNow = transAngle(x, y);
+        var angelBase = areaAngel();
+        var useNow = {
+            colorUse,
+            startUse,
+            endUse,
+        }
+        for (var i = 0; i < angelBase.length; i++) {
+            while (angelNow > angelBase.startAngel && angelNow < angelBase.endAngel) {
+                useNow.colorUse = angelBase.color;
+                useNow.startUse = angelBase.startAngel;
+                useNow.endUse = angelBase.endAngel;
+            }
+        }
+        return useNow;
+    }
+
+    draw();
+
+    ctx.fill();
+
+    var fns = [draw];
+
+    c.onmousemove = function (e) {
+        
+        var now = wherePath(x, y);
+        ctx.beginPath();
+        ctx.moveTo(cneter.x, center.y);
+        ctx.arc(center.x, center.y, radius + 30, now.startUse, now.endUse);
+        ctx.stroke();
+
+        ctx, fillStyle = now.colorUse;
+        ctx.fill();
+    }
+</script>
+
+</html>

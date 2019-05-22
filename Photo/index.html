@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sneaker * Sacai</title>
+    <style>
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            text-decoration: none;
+
+        }
+
+        #container {
+
+            margin: 20px auto;
+
+            width: 900px;
+
+            height: 600px;
+
+            border: 3px solid #333;
+
+            overflow: hidden;
+
+            position: relative;
+
+        }
+
+        #list {
+
+            width: 8100px;
+
+            height: 600px;
+
+            position: absolute;
+
+            z-index: 1;
+
+            left: 0px;
+
+        }
+
+        #list img {
+
+            float: left;
+
+            width: 900px;
+
+            height: 600px;
+
+        }
+
+        #buttons {
+
+            position: absolute;
+
+            height: 20px;
+
+            width: 200px;
+
+            z-index: 2;
+
+            bottom: 20px;
+
+            right: 350px;
+
+        }
+
+        #buttons span {
+
+            cursor: pointer;
+
+            float: left;
+
+            border: 1px solid #fff;
+
+            border-radius: 50%;
+
+            height: 15px;
+
+            width: 15px;
+
+            margin-right: 5px;
+
+            background: white;
+
+        }
+
+        #buttons .on {
+
+            background: yellow;
+
+        }
+
+        .arrow {
+
+            display: none;
+
+            cursor: pointer;
+
+            line-height: 40px;
+
+            text-align: center;
+
+            font-size: 30px;
+
+            width: 40px;
+
+            height: 40px;
+
+            position: absolute;
+
+            z-index: 2;
+
+            top: 250px;
+
+            color: #fff;
+
+            background: rgba(255, 255, 255, 0.3);
+
+        }
+
+        .arrow:hover {
+
+            background-color: rgba(255, 255, 255, 0.7);
+
+        }
+
+        #container:hover .arrow {
+
+            display: block;
+
+        }
+
+        #pre {
+
+            left: 20px;
+
+        }
+
+        #next {
+
+            right: 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="list">
+            <img indeximg="1" src="img/01.jpg" />
+            <img indeximg="2" src="img/02.jpg" />
+            <img indeximg="3" src="img/03.jpg" />
+            <img indeximg="4" src="img/04.jpg" />
+            <img indeximg="5" src="img/05.jpg" />
+            <img indeximg="6" src="img/06.jpg" />
+            <img indeximg="7" src="img/07.jpg" />
+        </div>
+        <div id="buttons">
+            <span index="1" class="on"></span>
+            <span index="2"></span>
+            <span index="3"></span>
+            <span index="4"></span>
+            <span index="5"></span>
+            <span index="6"></span>
+            <span index="7"></span>
+        </div>
+        <a href="javascript:;" id="prev" class="arrow">&lt;</a>
+        <a href="javascript:;" id="next" class="arrow">&gt;</a>
+    </div>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+    // window.onload = function () {
+
+    //     //基本对象的提取
+    //     var width = 900;
+
+    //     var container = document.getElementById('container');
+
+
+    //     var list = document.getElementById('list');
+    //     var prev = document.getElementById('prev');
+    //     var next = document.getElementById('next');
+    //     var num = list.children.length; // get img number
+    //     var buttons = document.getElementById("buttons");
+
+    //     var timer;
+
+    //     function autoPlay()
+    //     {
+    //         timer = setInterval(function()
+    //         {
+    //             next.onclick;
+    //         },1000);
+    //     }
+
+    //     autoPlay();
+
+
+
+    //     function animate(offset) {
+    //         var left = list.style.left ? parseInt(list.style.left) : 0
+    //         var newLeft = left - offset * width;
+    //         list.style.left = newLeft + 'px';
+    //         if (newLeft <= -num * width) {
+    //             list.style.left = '0px';
+    //         }
+    //         if (newLeft > 0) {
+    //             list.style.left = -(num - 1) * width + 'px';
+    //         }
+    //     }
+    //     prev.onclick = function () {
+    //         animate(-1);
+    //     }
+    //     next.onclick = function () {
+    //         animate(1);
+    //     }
+
+    //     contianer.onmouseout = function()
+    //     {
+    //         arrow.style.display = "none";
+    //         setInterval(prev.onclick);
+    //     }
+
+    // }
+
+    var list = document.getElementById('list');
+
+    var prev = document.getElementById('prev');
+
+    var next = document.getElementById('next');
+
+    var container = document.getElementById('container');
+
+    var buttons = document.getElementById('buttons').getElementsByTagName('span');
+
+    var index = 1;
+
+
+
+    function animate(offset) {
+
+        var left = list.style.left ? parseInt(list.style.left) : 0;
+        var newLeft = left - offset;
+        list.style.left = newLeft + "px";
+        if (newLeft <= -6300) {
+            list.style.left = "0px";
+        }
+        if (newLeft > 0) {
+            list.style.left =  -5400+ "px";
+        }
+    }
+
+    var timer;
+
+    function autoPlay() {
+        timer = setInterval(function () {
+            next.onclick()
+        }, 1000);
+    }
+
+    autoPlay();
+
+    function stopPlay() {
+
+        clearInterval(timer);
+
+    }
+
+    function showButton() {
+        for (var i = 0; i < buttons.length; i++) {
+
+            if (buttons[i].className == 'on') {
+
+                buttons[i].className = '';
+
+            }
+
+        }
+
+        buttons[index - 1].className = 'on';
+
+    }
+
+    prev.onclick = function () {
+
+        index -= 1;
+
+        if (index < 1) {
+
+            index = 7;
+
+        }
+
+        showButton();
+
+        animate(900);
+
+    }
+
+    next.onclick = function () {
+
+        index += 1;
+
+        if (index > 7) {
+
+            index = 1;
+
+        }
+
+        showButton();
+
+        animate(-900);
+
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+
+        buttons[i].onclick = function () {
+
+            var clickIndex = parseInt(this.getAttribute('index'));
+
+            var offset = 900 * (index - clickIndex);
+
+            animate(offset);
+
+            index = clickIndex;
+
+            showButton();
+
+        }
+
+    }
+
+    container.onmouseover = stopPlay;
+
+    container.onmouseout = autoPlay;
+</script>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Circle</title>
+</head>
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+</body>
+
+<script type="text/javascript">
+var c = document.getElementById("canvas");
+c.width = 400;
+c.height = 300;
+var ctx = c.getContext("2d");
+c.style.backgroundColor = "#336699";
+document.body.appendChild(c);
+
+ctx.fillStyle = "white";
+ctx.beginPath();
+ctx.moveTo(70,18);
+ctx.arc(70,18,15,Math.PI*0.5,Math.PI*2);
+ctx.closePath();
+ctx.fill();
+</script>
+</html>

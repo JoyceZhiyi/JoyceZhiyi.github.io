@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Position</title>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+    <p>
+        悬停看到坐标
+        <span id="out"></span>
+    </p>
+    <div id="c1"></div>
+</body>
+
+<script type="text/javascript">
+let c = document.getElementById("canvas");
+c.width = 300;
+c.height = 400;
+let cxt = c.getContext("2d");
+cxt.fillStyle = "#336699";
+cxt.fillRect(0,0,300,400);
+
+// 是否可以书写为e = c.onmousemove()
+c.onmousemove = e =>
+{
+    let box = c.getBoundingClientRect();
+    let x = e.clientX;
+    let y = e.clientY;
+    let xx = x - box.left;
+    let yy = y-box.top;
+    let out = document.getElementById("out");
+    out.innerText = `screen:${x},${y} box:${xx},${yy}`;
+
+};
+
+document.getElementById("c").appendChild(c)
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Font</title>
+</head>
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+</body>
+
+<script type="text/javascript">
+var c = document.getElementById("canvas");
+var ctx = c.getContext("2d");
+c.width = 400;
+c.height = 300;
+c.style.backgroundColor = "#336699";
+document.body.appendChild(c);
+
+ctx.font = "18px STHupo";
+ctx.fillText("Hello world",10,30);
+</script>
+</html>

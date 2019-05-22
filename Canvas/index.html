@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sector Graph</title>
+</head>
+
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+</body>
+
+<script type="text/javascript">
+    //铺画布
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+
+    c.width = innerWidth;
+    c.height = innerHeight;
+    c.style.background = "black";
+    document.body.appendChild(c);
+    ctx.font = "28px STHupo";
+
+    //饼图数据
+    var data = [{
+            title: "直接访问",
+            value: 0.18,
+            color: "#993300"
+        },
+        {
+            title: "邮件营销",
+            value: 0.12,
+            color: "#1e90ff"
+        },
+        {
+            title: "联盟广告",
+            value: 0.10,
+            color: "#66cccc"
+        },
+        {
+            title: "视频广告",
+            value: 0.05,
+            color: "#ffcc99"
+        },
+        {
+            title: "搜索引擎",
+            value: 0.55,
+            color: "#33cc99"
+        },
+    ]
+    var radius = 210;
+    var center = {
+        x: 400,
+        y: 300,
+    };
+
+    //饼图函数
+    function calPor(data) {
+        if (data instanceof Array) {
+            // reduce（function()）reduce 方法接收一个函数作为参数
+            var sum = data.reduce(function (a, b) {
+                return a + b.value;
+            }, 0);
+
+            // 使用map()直接针对于每一个单独的扇形进行设置
+            var map = data.map(function (a) {
+                return {
+                    title: a.title,
+                    value: a.value,
+                    color: a.color,
+                    portion: a.value / sum,
+                };
+            });
+            return map;
+        }
+    }
+
+    function draw() {
+        var dataS = calPor(data);
+        
+        var tempAngel = -90;
+        for (var i = 0; i < data.length; i++) {
+
+            ctx.beginPath();
+            ctx.moveTo(center.x, center.y);
+
+            var angle = data[i].value * 360;
+
+            var beginAngel = tempAngel * Math.PI / 180;
+            var endAngel = (tempAngel + angle) * Math.PI / 180;
+
+            ctx.arc(center.x, center.y, radius, beginAngel, endAngel);
+            ctx.stroke();
+
+            ctx.fillStyle = data[i].color;
+            ctx.fill();
+
+            var txt = data[i].title + ':' + data[i].value.toFixed(2) * 100 + '%';
+            var txtAngel = tempAngel + 1 / 2 * angle;
+
+            var txtX = center.x + Math.cos(txtAngel * Math.PI / 180) * (radius + 30);
+            var txtY = center.y + Math.sin(txtAngel * Math.PI / 180) * (radius + 30);
+
+            if (txtAngel > 90 && txtAngel < 270) {
+                ctx.textAlign = 'end';
+            }
+
+            ctx.fillText(txt, txtX, txtY);
+            tempAngel += angle;
+        }
+    }
+
+    function trans(x,y)
+    {
+        var radiuss = x*x + y*y;
+        angelToRedian(function(radiuss)
+        {
+            return rediuss * Math.PI/180;
+        })
+        var transAngel;
+        return transAngel;
+    }
+
+    draw();
+
+    ctx.fill();
+
+    var fns = [draw];
+
+    c.onmousemove = function(e){
+        var x= e.pageX;
+        var y =e.pageY;
+        c.clearRect(0,0,800,600);
+
+        for(var i = 0;i<data.length;i++)
+        {
+            fns[i];
+            if(ctx.isPointInPath(x,y))
+            {
+                ctx.fillStyle = "white";
+            }
+            ctx.fill();
+        }
+    }
+</script>
+
+</html>
