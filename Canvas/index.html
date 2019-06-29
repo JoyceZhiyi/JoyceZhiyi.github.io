@@ -5,145 +5,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sector Graph</title>
+    <title>Floating Graph</title>
 </head>
 
 <body>
-    <canvas id="canvas">
-
-    </canvas>
+    <div id="c"></div>
 </body>
 
-<script type="text/javascript">
-    //铺画布
-    var c = document.getElementById("canvas");
+<script>
+    var data = [{
+            title: "苹果",
+            value: 0.24,
+            color: "green"
+        },
+        {
+            title: "三星",
+            value: 0.26,
+            color: "yellow"
+        },
+        {
+            title: "华为",
+            value: 0.13,
+            color: "orange"
+        },
+        {
+            title: "锤子",
+            value: 0.17,
+            color: "red"
+        },
+        {
+            title: "小米",
+            value: 0.08,
+            color: "purple"
+        },
+        {
+            title: "其他",
+            value: 0.12,
+            color: "cyan"
+        }
+    ];
+
+    var w = 800;
+    var h = 600;
+    var cx = w / 2;
+    var cy = h / 2;
+    var r = 200;
+
+    let c = document.createElement("canvas");
+
+    c.width = w;
+    c.height = h;
+    document.getElementById("c").appendChild(c);
+
     var ctx = c.getContext("2d");
 
-    c.width = innerWidth;
-    c.height = innerHeight;
-    c.style.background = "black";
-    document.body.appendChild(c);
-    ctx.font = "28px STHupo";
 
-    //饼图数据
-    var data = [{
-            title: "直接访问",
-            value: 0.18,
-            color: "#993300"
-        },
-        {
-            title: "邮件营销",
-            value: 0.12,
-            color: "#1e90ff"
-        },
-        {
-            title: "联盟广告",
-            value: 0.10,
-            color: "#66cccc"
-        },
-        {
-            title: "视频广告",
-            value: 0.05,
-            color: "#ffcc99"
-        },
-        {
-            title: "搜索引擎",
-            value: 0.55,
-            color: "#33cc99"
-        },
-    ]
-    var radius = 210;
-    var center = {
-        x: 400,
-        y: 300,
-    };
 
-    //饼图函数
-    function calPor(data) {
-        if (data instanceof Array) {
-            // reduce（function()）reduce 方法接收一个函数作为参数
-            var sum = data.reduce(function (a, b) {
-                return a + b.value;
-            }, 0);
+    var beginAngle = Math.PI / 6;
+    for (var i = 0; i < data.length; i++) {
+        var item = data[i];
+        var angle = item.value * 2 * Math.PI;
+        var endAngle = beginAngle + angle;
 
-            // 使用map()直接针对于每一个单独的扇形进行设置
-            var map = data.map(function (a) {
-                return {
-                    title: a.title,
-                    value: a.value,
-                    color: a.color,
-                    portion: a.value / sum,
-                };
-            });
-            return map;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, beginAngle, endAngle);
+        ctx.fillStyle = item.color;
+        ctx.fill();
+
+        var txtAngle = beginAngle + angle / 2;
+        if (txtAngle >= Math.PI / 2 && txtAngle < Math.PI * 3 / 2) {
+            ctx.textAlign = "end";
+        } else {
+            ctx.textAlign = "start";
         }
+
+        ctx.font = "18px Micorsoft YaHei";
+        var tx = cx + (r + 30) * Math.cos(txtAngle);
+        var ty = cy + (r + 30) * Math.sin(txtAngle);
+        ctx.fillText(item.title + " " + item.value * 100 + "%", tx, ty);
+
+        beginAngle = endAngle;
     }
 
-    function draw() {
-        var dataS = calPor(data);
-        
-        var tempAngel = -90;
+
+    function Circle() {
+        let c = document.createElement("canvas");
+
+        c.width = w;
+        c.height = h;
+        document.getElementById("c").appendChild(c);
+
+        var b = c.getContext("2d");
+
+        var beginAngle = Math.PI / 6;
         for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            var angle = item.value * 2 * Math.PI;
+            var endAngle = beginAngle + angle;
 
             ctx.beginPath();
-            ctx.moveTo(center.x, center.y);
-
-            var angle = data[i].value * 360;
-
-            var beginAngel = tempAngel * Math.PI / 180;
-            var endAngel = (tempAngel + angle) * Math.PI / 180;
-
-            ctx.arc(center.x, center.y, radius, beginAngel, endAngel);
-            ctx.stroke();
-
-            ctx.fillStyle = data[i].color;
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, beginAngle, endAngle);
+            ctx.fillStyle = item.color;
             ctx.fill();
 
-            var txt = data[i].title + ':' + data[i].value.toFixed(2) * 100 + '%';
-            var txtAngel = tempAngel + 1 / 2 * angle;
-
-            var txtX = center.x + Math.cos(txtAngel * Math.PI / 180) * (radius + 30);
-            var txtY = center.y + Math.sin(txtAngel * Math.PI / 180) * (radius + 30);
-
-            if (txtAngel > 90 && txtAngel < 270) {
-                ctx.textAlign = 'end';
+            var txtAngle = beginAngle + angle / 2;
+            if (txtAngle >= Math.PI / 2 && txtAngle < Math.PI * 3 / 2) {
+                ctx.textAlign = "end";
+            } else {
+                ctx.textAlign = "start";
             }
 
-            ctx.fillText(txt, txtX, txtY);
-            tempAngel += angle;
+            ctx.font = "18px Micorsoft YaHei";
+            var tx = cx + (r + 30) * Math.cos(txtAngle);
+            var ty = cy + (r + 30) * Math.sin(txtAngle);
+            ctx.fillText(item.title + " " + item.value * 100 + "%", tx, ty);
+
+            beginAngle = endAngle;
         }
     }
 
-    function trans(x,y)
-    {
-        var radiuss = x*x + y*y;
-        angelToRedian(function(radiuss)
-        {
-            return rediuss * Math.PI/180;
-        })
-        var transAngel;
-        return transAngel;
+    //each floating graph
+    function apple() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "green";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6, Math.PI / 6 + 0.48 * Math.PI);
+        aaa.closePath();
+        aaa.fill();
     }
 
-    draw();
+    function sanxing() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "yellow";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6 + 0.48 * Math.PI, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI);
+        aaa.closePath();
+        aaa.fill();
+    }
 
-    ctx.fill();
+    function huawei() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "orange";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI, Math.PI / 6 + 0.48 * Math.PI + 0.26 *
+            2 * Math.PI + Math.PI * 0.26);
+        aaa.closePath();
+        aaa.fill();
+    }
 
-    var fns = [draw];
+    function chuizi() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "red";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26, Math.PI / 6 + 0.48 *
+            Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26 + Math.PI * 0.34);
+        aaa.closePath();
+        aaa.fill();
+    }
 
-    c.onmousemove = function(e){
-        var x= e.pageX;
-        var y =e.pageY;
-        c.clearRect(0,0,800,600);
+    function xiaomi() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "purple";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26 + Math.PI * 0.34, Math
+            .PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26 + Math.PI * 0.34 + Math.PI * 0.16);
+        aaa.closePath();
+        aaa.fill();
+    }
 
-        for(var i = 0;i<data.length;i++)
-        {
-            fns[i];
-            if(ctx.isPointInPath(x,y))
-            {
-                ctx.fillStyle = "white";
+    function other() {
+        let aaa = c.getContext("2d");
+        aaa.fillStyle = "cyan";
+        aaa.beginPath();
+        aaa.moveTo(cx, cy);
+        aaa.arc(cx, cy, 220, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26 + Math.PI * 0.34 + Math
+            .PI * 0.16, Math.PI / 6 + 0.48 * Math.PI + 0.26 * 2 * Math.PI + Math.PI * 0.26 + Math.PI * 0.34 + Math
+            .PI * 0.16 + Math.PI * 0.24);
+        aaa.closePath();
+        aaa.fill();
+    }
+
+
+    c.onmousemove = e => {
+
+        let x = e.clientX;
+        let y = e.clientY;
+        var reX = x - cx;
+        var reY = y - cy;
+        var reAngle = 0;
+        var reR = Math.hypot(reX, reY);
+        if (reY >= 0) {
+            if (reX === 0) {
+                reAngle = Math.PI / 2;
+            } else if (reX < 0) {
+                reAngle = Math.atan2(reY, reX) + Math.PI;
+            } else {
+                reAngle = Math.atan2(reY, reX);
             }
-            ctx.fill();
+        } else {
+            if (reX === 0) {
+                reAngle = Math.PI * 3 / 2;
+            } else if (reX < 0) {
+                reAngle = Math.PI + Math.atan2(reY, reX);
+            } else {
+                reAngle = reAngle = Math.atan2(reY, reX) + Math.PI;
+            }
+        }
+
+
+        if (reR <= r && reAngle > Math.PI / 6 && reAngle < Math.PI / 6 + Math.PI * 0.26 && reY < 0) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            huawei();
+        } else if (reR <= r && reAngle > Math.PI / 6 + Math.PI * 0.26 && reAngle < Math.PI / 6 + Math.PI * 0.26 +
+            Math.PI * 0.34 && reY < 0) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            chuizi();
+        } else if (reR < r && reAngle > Math.PI / 6 + Math.PI * 0.26 + Math.PI * 0.34 && reAngle < Math.PI / 6 +
+            Math.PI * 0.26 + Math.PI * 0.34 + Math.PI * 0.16) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            xiaomi();
+        } else if (reR < r && reAngle > Math.PI / 6 + Math.PI * 0.26 + Math.PI * 0.34 + Math.PI * 0.16 && reX > 0 ||
+            reAngle < Math.PI / 6 && reR < r && reX > 0) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            other();
+        } else if (reR < r && reAngle > Math.PI / 6 && reAngle < Math.PI / 6 + 0.48 * Math.PI && reY > 0 ||
+            reAngle > Math.PI * 3 / 2 && reAngle < Math.PI * 3 / 2 + Math.PI / 6 && reR < r) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            apple();
+        } else if (reR < r && reAngle > Math.PI * 3 / 2 + Math.PI / 6 || reAngle < Math.PI / 6 && reX < 0 && reR <
+            r) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
+            sanxing();
+        } else {
+            ctx.clearRect(0, 0, c.width, c.height);
+            Circle();
         }
     }
 </script>
